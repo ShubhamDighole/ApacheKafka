@@ -1,0 +1,43 @@
+For Very First Application of KAFKA :
+
+
+
+1. download the apache kafka from official website and save the zip file which will be downloaded from the website in the C:/kafka
+
+2. update 2 files as mentioned below
+
+server.properties  -->> log.dirs=C:/kafka/kafka-logs
+zookeeper.prperties-->> dataDir=C:/kafka/data/zookeeper
+
+make above two directories as windows directory and not as an linux one (because we are using in windows)
+
+3. First start the zookeeper 
+
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+4. Now onces zookeeper is up now start kafka-server
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+
+5. Now start producer and consumer like below
+
+
+kafka-topics.bat --create --bootstrap-server localhost:9092 --topic test
+
+kafka-console-producer.bat --broker-list localhost:9092 --topic test
+
+(please note that the 9092 is the default port on which localhost will run)
+
+6. create an project like we created in springboot and hit below url to listen to the port.
+
+kafka-console-consumer.bat test --topic test --bootstrap-server localhost:9092 --from-beginning
+
+7. Please note to run the project in the local host we need to do one more change..
+
+Change:
+
+#listeners=PLAINTEXT://:9092`
+in server.properties to:
+
+listeners=PLAINTEXT://localhost:9092
